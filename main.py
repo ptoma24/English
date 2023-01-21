@@ -179,8 +179,6 @@ class Labyrinth:
                 screen.fill(colors[self.get_tile_id((x, y))], rect)
         font = pygame.font.Font(None, 30)
         text_coord = 300
-        # intro_text = [self.task]
-        # for line in intro_text:
         string_rendered = font.render(self.task, 1, pygame.Color(255, 255, 255))
         intro_rect = string_rendered.get_rect()
         text_coord += 10
@@ -196,8 +194,7 @@ class Labyrinth:
         return self.get_tile_id(position) in self.free_tiles
 
     def is_trashcan(self, position):
-        self.k -= 2
-        return self.get_tile_id(position) == self.trashcan
+        return self.get_tile_id(position) == self.trashcan, self.k
 
 
 class Hero(pygame.sprite.Sprite):
@@ -214,6 +211,7 @@ class Hero(pygame.sprite.Sprite):
         self.rect = pygame.Rect(self.x[0] * TILE_SIZE, self.y[0] * TILE_SIZE, TILE_SIZE, TILE_SIZE)
         self.i = 0
         self.character = [""] * len
+        self.k = 10
 
     def set_character(self, character):
         self.word_now += character
@@ -235,10 +233,12 @@ class Hero(pygame.sprite.Sprite):
         self.rect = pygame.Rect(self.x[0] * TILE_SIZE, self.y[0] * TILE_SIZE, TILE_SIZE, TILE_SIZE)
         if self.x[0] == 0 and self.y[0] == 1:
             if word == self.word_now:
+                print(self.k)
                 file = "data/" + word + ".ogg"
                 s = pygame.mixer.Sound(file)
                 s.play()
                 end_level(word)
+
             else:
                 end_level_wrong(word, self.word_now)
                 print("Неверно")
@@ -252,7 +252,8 @@ class Hero(pygame.sprite.Sprite):
             textpos = center1[0] - 5, center1[1] - 5
             screen.blit(text, textpos)
 
-    def del_character(self):
+    def del_character(self, k):
+        self.k = k
         if self.word_now != "":
             self.word_now = self.word_now[:-1]
             self.i -= 1
@@ -293,6 +294,7 @@ class Game:
         self.labyrinth = labyrinth
         self.hero = hero
         self.letter = letter
+        self.k = 10
 
     def render(self, screen):
         self.labyrinth.render(screen)
@@ -305,26 +307,35 @@ class Game:
             next_x -= 1
             if self.labyrinth.is_free((next_x, next_y)):
                 self.hero.set_position((next_x, next_y))
-            if self.labyrinth.is_trashcan((next_x, next_y)):
-                self.hero.del_character()
+            a = self.labyrinth.is_trashcan((next_x, next_y))
+            if a[0]:
+                self.k -= 1
+                # self.k = a[1]
+                self.hero.del_character(self.k)
         if pygame.key.get_pressed()[pygame.K_RIGHT]:
             next_x += 1
             if self.labyrinth.is_free((next_x, next_y)):
                 self.hero.set_position((next_x, next_y))
-            if self.labyrinth.is_trashcan((next_x, next_y)):
-                self.hero.del_character()
+            a = self.labyrinth.is_trashcan((next_x, next_y))
+            if a[0]:
+                self.k -= 1
+                self.hero.del_character(self.k)
         if pygame.key.get_pressed()[pygame.K_UP]:
             next_y -= 1
             if self.labyrinth.is_free((next_x, next_y)):
                 self.hero.set_position((next_x, next_y))
-            if self.labyrinth.is_trashcan((next_x, next_y)):
-                self.hero.del_character()
+            a = self.labyrinth.is_trashcan((next_x, next_y))
+            if a[0]:
+                self.k -= 1
+                self.hero.del_character(self.k)
         if pygame.key.get_pressed()[pygame.K_DOWN]:
             next_y += 1
             if self.labyrinth.is_free((next_x, next_y)):
                 self.hero.set_position((next_x, next_y))
-            if self.labyrinth.is_trashcan((next_x, next_y)):
-                self.hero.del_character()
+            a = self.labyrinth.is_trashcan((next_x, next_y))
+            if a[0]:
+                self.k = a[1]
+                self.hero.del_character(self.k)
 
 
 def terminate():
@@ -431,6 +442,7 @@ if __name__ == "__main__":
     elif types == 3:
         task = "Собери слова маленьким буквами"
     word = ""
+    k = 10
     screen = pygame.display.set_mode(WINDOW_SIZE)
     sprite_hero = pygame.sprite.Group()
     dict_a = {"cat": "кот", "hat": "шляпа", "ant": "муравей", "map": "карта"}
