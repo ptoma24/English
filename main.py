@@ -3,6 +3,7 @@ from random import randrange
 import os
 import sys
 from random import sample
+import sqlite3
 from playsound import playsound
 
 pygame.init()
@@ -82,7 +83,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
         self.i += 1
 
 
-def end_level(word):
+def end_level(word, k):
     r = 10
     x0 = 250
     y0 = 250
@@ -108,7 +109,31 @@ def end_level(word):
                 s.play()
                 # playsound(file)
                 t2 = True
-            font = pygame.font.Font(None, 20)
+            con = sqlite3.connect("english.sqlite")
+            cur = con.cursor()
+            result = cur.execute("""SELECT sum FROM games where type in(SELECT id FROM type_games 
+            WHERE type = ?) and word in(SELECT id FROM words WHERE word = ?)""", (type_game, word)).fetchall()
+            (ans,) = result[0]
+            if k <= ans:
+                font = pygame.font.Font(None, 20)
+                pygame.draw.rect(screen, (255, 255, 255), (20, 20, 440, 40))
+                line = "Ваш результат " + str(k) + " Ваш рекорд " + str(ans)
+                text = font.render(line, True, [0, 0, 0])
+                textpos = 20, 20
+                screen.blit(text, textpos)
+            else:
+                cur.execute("""UPDATE games SET sum = ? where type in(SELECT id FROM type_games 
+                                            WHERE type = ?) and word in(SELECT id FROM words WHERE word = ?)""",
+                            (k, type_game, word))
+                font = pygame.font.Font(None, 20)
+                pygame.draw.rect(screen, (255, 255, 255), (20, 20, 440, 40))
+                line = "Ваш новый рекорд" + str(k)
+                text = font.render(line, True, [0, 0, 0])
+                textpos = 20, 20
+                screen.blit(text, textpos)
+            con.commit()
+            con.close()
+
             center1 = (x0 + r, y0 - r * (3 ** 0.5))
             pygame.draw.circle(screen, (255, 0, 0), center1, r)
             text = font.render(word[2], True, [0, 0, 0])
@@ -237,7 +262,7 @@ class Hero(pygame.sprite.Sprite):
                 file = "data/" + word + ".ogg"
                 s = pygame.mixer.Sound(file)
                 s.play()
-                end_level(word)
+                end_level(word, self.k)
 
             else:
                 end_level_wrong(word, self.word_now)
@@ -450,27 +475,34 @@ if __name__ == "__main__":
     list_a = ["cat", "hat", "ant", "map"]
     list_e = ["ten", "net", "pet", "pen"]
     words = []
+    type_game = ''
     if level == "a":
         words = sample(list_a, 2)
         if types == 1:
             task = "Собери по английски слова " + dict_a[words[0]]
+            type_game = "english"
         elif types == 2:
             task = "Собери слова большими буквами " + words[0]
+            type_game = "upper"
             for i in range(len(words)):
                 words[i] = words[i].upper()
         else:
             task = "Собери слова маленьким буквами " + words[0].upper()
+            type_game = "lower"
         labyrinth = Labyrinth("simple_map_a.txt", [0, 2], 2, 3, task)
         word = words[0]
     if level == "e":
         words = sample(list_e, 2)
         if types == 1:
             task = "Собери по английски слова " + dict_e[words[0]]
+            type_game = "english"
         elif types == 2:
             task = "Собери слова большими буквами " + words[0]
+            type_game = "upper"
             for i in range(len(words)):
                 words[i] = words[i].upper()
         else:
+            type_game = "lower"
             task = "Собери слова маленьким буквами " + words[0].upper()
         labyrinth = Labyrinth("simple_map_a.txt", [0, 2], 2, 3, task)
         word = words[0]
