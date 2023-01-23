@@ -4,7 +4,9 @@ import os
 import sys
 from random import sample
 import sqlite3
-from playsound import playsound
+
+# import gtts
+# from pydub import AudioSegment
 
 pygame.init()
 pygame.display.set_caption('Учим английский алфавит')
@@ -17,8 +19,12 @@ list_x = []
 list_y = []
 
 
-# engine = pyttsx3.init()
-# engine.setProperty("rate", 120)
+# def load_music(word):
+#     t1 = gtts.gTTS(word)
+#     t1.save(word + ".mp3")
+#     mp3_file_name = word + ".mp3"
+# ogg_file_name = "data/" + word + ".ogg"  # oGG file name
+# AudioSegment.from_mp3(mp3_file_name).export(ogg_file_name, format='ogg')
 
 
 def load_image(name, colorkey=None):
@@ -104,6 +110,7 @@ def end_level(word, k):
             t = ani.update()
         else:
             if not t2:
+                # load_music(word)
                 file = "data/" + word + ".ogg"
                 s = pygame.mixer.Sound(file)
                 s.play()
@@ -240,8 +247,12 @@ class Hero(pygame.sprite.Sprite):
 
     def set_character(self, character):
         self.word_now += character
-        self.character[self.i] = character
-        self.i += 1
+        if self.i > len(self.character) - 1:
+            self.k -= 1
+        else:
+            self.character[self.i] = character
+            self.i += 1
+        # load_music(word)
         file = "data/" + character + ".ogg"
         s = pygame.mixer.Sound(file)
         s.play()
@@ -259,6 +270,7 @@ class Hero(pygame.sprite.Sprite):
         if self.x[0] == 0 and self.y[0] == 1:
             if word == self.word_now:
                 print(self.k)
+                # load_music(word)
                 file = "data/" + word + ".ogg"
                 s = pygame.mixer.Sound(file)
                 s.play()
