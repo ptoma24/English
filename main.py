@@ -10,11 +10,11 @@ import sqlite3
 
 pygame.init()
 pygame.display.set_caption('Учим английский алфавит')
-WINDOW_SIZE = WINDOW_WIDTH, WINDOW_HIGHT = 480, 480
+WINDOW_SIZE = WINDOW_WIDTH, WINDOW_HIGHT = 600, 600
 screen = pygame.display.set_mode(WINDOW_SIZE)
 FPS = 15
 MAPS_DIR = "maps"
-TILE_SIZE = 20
+TILE_SIZE = 30
 list_x = []
 list_y = []
 
@@ -50,49 +50,49 @@ class AnimatedSprite(pygame.sprite.Sprite):
         self.i = 0
 
     def update(self):
-        r = 10
-        x0 = 250
-        y0 = 250
+        r = TILE_SIZE // 2
+        x0 = 300
+        y0 = 300
         if self.i == 0:
-            pygame.draw.circle(screen, (255, 0, 0), (x0 + 2 * r, y0), r)
-            pygame.draw.circle(screen, (255, 0, 0), (x0 + r, y0 - r * (3 ** 0.5)), r)
-            pygame.draw.circle(screen, (255, 255, 0), (x0 - r, y0 - r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 + 2 * r, y0), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 + r, y0 - r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#006400", (x0 - r, y0 - r * (3 ** 0.5)), r)
         elif self.i == 1:
-            pygame.draw.circle(screen, (255, 0, 0), (x0 + r, y0 - r * (3 ** 0.5)), r)
-            pygame.draw.circle(screen, (255, 0, 0), (x0 - r, y0 - r * (3 ** 0.5)), r)
-            pygame.draw.circle(screen, (255, 255, 0), (x0 - 2 * r, y0), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 + r, y0 - r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 - r, y0 - r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#006400", (x0 - 2 * r, y0), r)
         elif self.i == 2:
-            pygame.draw.circle(screen, (255, 0, 0), (x0 - r, y0 - r * (3 ** 0.5)), r)
-            pygame.draw.circle(screen, (255, 0, 0), (x0 - 2 * r, y0), r)
-            pygame.draw.circle(screen, (255, 255, 0), (x0 - r, y0 + r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 - r, y0 - r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 - 2 * r, y0), r)
+            pygame.draw.circle(screen, "#006400", (x0 - r, y0 + r * (3 ** 0.5)), r)
         elif self.i == 3:
-            pygame.draw.circle(screen, (255, 0, 0), (x0 - 2 * r, y0), r)
-            pygame.draw.circle(screen, (255, 0, 0), (x0 - r, y0 + r * (3 ** 0.5)), r)
-            pygame.draw.circle(screen, (255, 255, 0), (x0 + r, y0 + r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 - 2 * r, y0), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 - r, y0 + r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#006400", (x0 + r, y0 + r * (3 ** 0.5)), r)
         elif self.i == 4:
-            pygame.draw.circle(screen, (255, 0, 0), (x0 - r, y0 + r * (3 ** 0.5)), r)
-            pygame.draw.circle(screen, (255, 0, 0), (x0 + r, y0 + r * (3 ** 0.5)), r)
-            pygame.draw.circle(screen, (255, 255, 0), (x0 + 2 * r, y0), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 - r, y0 + r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 + r, y0 + r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#006400", (x0 + 2 * r, y0), r)
         elif self.i == 5:
-            pygame.draw.circle(screen, (255, 0, 0), (x0 + r, y0 + r * (3 ** 0.5)), r)
-            pygame.draw.circle(screen, (255, 0, 0), (x0 + 2 * r, y0), r)
-            pygame.draw.circle(screen, (255, 255, 0), (x0 + r, y0 - r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 + r, y0 + r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 + 2 * r, y0), r)
+            pygame.draw.circle(screen, "#006400", (x0 + r, y0 - r * (3 ** 0.5)), r)
         elif self.i == 6:
-            pygame.draw.circle(screen, (255, 0, 0), (x0 + 2 * r, y0), r)
-            pygame.draw.circle(screen, (255, 0, 0), (x0 + r, y0 - r * (3 ** 0.5)), r)
-            pygame.draw.circle(screen, (255, 255, 0), (x0 - r, y0 - r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 + 2 * r, y0), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 + r, y0 - r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#006400", (x0 - r, y0 - r * (3 ** 0.5)), r)
         elif self.i == 7:
-            pygame.draw.circle(screen, (255, 0, 0), (x0 + r, y0 - r * (3 ** 0.5)), r)
-            pygame.draw.circle(screen, (255, 0, 0), (x0 - r, y0 - r * (3 ** 0.5)), r)
-            pygame.draw.circle(screen, (255, 255, 0), (x0 - 3 * r, y0 - r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 + r, y0 - r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#32CD32", (x0 - r, y0 - r * (3 ** 0.5)), r)
+            pygame.draw.circle(screen, "#006400", (x0 - 3 * r, y0 - r * (3 ** 0.5)), r)
             return True
         self.i += 1
 
 
-def end_level(word, k):
-    r = 10
-    x0 = 250
-    y0 = 250
+def end_level(word, k, type_game):
+    r = TILE_SIZE // 2
+    x0 = 300
+    y0 = 300
     ani = AnimatedSprite()
     running = True
     clock = pygame.time.Clock()
@@ -103,9 +103,7 @@ def end_level(word, k):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            # if event.type == pygame.KEYDOWN or \
-            #         event.type == pygame.MOUSEBUTTONDOWN:
-            #     return
+                main()
         if not t:
             t = ani.update()
         else:
@@ -118,14 +116,17 @@ def end_level(word, k):
                 t2 = True
             con = sqlite3.connect("english.sqlite")
             cur = con.cursor()
+            # print("type game")
+            # print(type_game)
+            # print(type_game, word.lower())
             result = cur.execute("""SELECT sum FROM games where type in(SELECT id FROM type_games 
-            WHERE type = ?) and word in(SELECT id FROM words WHERE word = ?)""", (type_game, word)).fetchall()
+            WHERE type = ?) and word in(SELECT id FROM words WHERE word = ?)""", (type_game, word.lower())).fetchall()
             (ans,) = result[0]
             if k <= ans:
                 font = pygame.font.Font(None, 20)
-                pygame.draw.rect(screen, (255, 255, 255), (20, 20, 440, 40))
+                pygame.draw.rect(screen, (0, 0, 0), (20, 20, 440, 40))
                 line = "Ваш результат " + str(k) + " Ваш рекорд " + str(ans)
-                text = font.render(line, True, [0, 0, 0])
+                text = font.render(line, True, [255, 255, 255])
                 textpos = 20, 20
                 screen.blit(text, textpos)
             else:
@@ -133,29 +134,29 @@ def end_level(word, k):
                                             WHERE type = ?) and word in(SELECT id FROM words WHERE word = ?)""",
                             (k, type_game, word))
                 font = pygame.font.Font(None, 20)
-                pygame.draw.rect(screen, (255, 255, 255), (20, 20, 440, 40))
-                line = "Ваш новый рекорд" + str(k)
-                text = font.render(line, True, [0, 0, 0])
+                pygame.draw.rect(screen, (0, 0, 0), (20, 20, 440, 40))
+                line = "Ваш новый рекорд " + str(k)
+                text = font.render(line, True, [255, 255, 255])
                 textpos = 20, 20
                 screen.blit(text, textpos)
             con.commit()
             con.close()
 
             center1 = (x0 + r, y0 - r * (3 ** 0.5))
-            pygame.draw.circle(screen, (255, 0, 0), center1, r)
-            text = font.render(word[2], True, [0, 0, 0])
+            pygame.draw.circle(screen, "#32CD32", center1, r)
+            text = font.render(word[2], True, [255, 255, 255])
             textpos = center1[0] - 5, center1[1] - 5
             screen.blit(text, textpos)
 
             center2 = (x0 - r, y0 - r * (3 ** 0.5))
-            pygame.draw.circle(screen, (255, 0, 0), center2, r)
-            text = font.render(word[1], True, [0, 0, 0])
+            pygame.draw.circle(screen, "#32CD32", center2, r)
+            text = font.render(word[1], True, [255, 255, 255])
             textpos = center2[0] - 5, center2[1] - 5
             screen.blit(text, textpos)
 
             center3 = (x0 - 3 * r, y0 - r * (3 ** 0.5))
-            pygame.draw.circle(screen, (255, 255, 0), center3, r)
-            text = font.render(word[0], True, [0, 0, 0])
+            pygame.draw.circle(screen, "#006400", center3, r)
+            text = font.render(word[0], True, [255, 255, 255])
             textpos = center3[0] - 5, center3[1] - 5
             screen.blit(text, textpos)
 
@@ -164,11 +165,11 @@ def end_level(word, k):
 
 
 def end_level_wrong(word, wrong):
-    fon = pygame.transform.scale(load_image('end.jpg'), (WINDOW_WIDTH, WINDOW_HIGHT))
+    fon = pygame.transform.scale(load_image('english.png'), (WINDOW_WIDTH, WINDOW_HIGHT))
     screen.blit(fon, (0, 0))
     font = pygame.font.Font(None, 30)
     text_coord = 200
-    line = "Неверно, " + wrong + ". Правильно " + word
+    line = "Неверно, " + "'" + wrong + "'" + ". Правильно " + word
     string_rendered = font.render(line, 1, pygame.Color(0, 0, 0))
     intro_rect = string_rendered.get_rect()
     intro_rect.top = text_coord
@@ -180,9 +181,10 @@ def end_level_wrong(word, wrong):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            if event.type == pygame.KEYDOWN or \
-                    event.type == pygame.MOUSEBUTTONDOWN:
-                return
+                main()
+            # if event.type == pygame.KEYDOWN or \
+            #         event.type == pygame.MOUSEBUTTONDOWN:
+            #     return
         pygame.display.flip()
 
 
@@ -210,10 +212,9 @@ class Labyrinth:
                                    self.tile_size, self.tile_size)
                 screen.fill(colors[self.get_tile_id((x, y))], rect)
         font = pygame.font.Font(None, 30)
-        text_coord = 300
+        text_coord = 4
         string_rendered = font.render(self.task, 1, pygame.Color(255, 255, 255))
         intro_rect = string_rendered.get_rect()
-        text_coord += 10
         intro_rect.top = text_coord
         intro_rect.x = 10
         text_coord += intro_rect.height
@@ -231,8 +232,10 @@ class Labyrinth:
 
 class Hero(pygame.sprite.Sprite):
 
-    def __init__(self, position, len):
+    def __init__(self, position, len, word, type_game):
         super().__init__(sprite_hero)
+        self.type_game = type_game
+        self.word = word
         self.word_now = ""
         self.len = len
         self.x = []
@@ -246,10 +249,11 @@ class Hero(pygame.sprite.Sprite):
         self.k = 10
 
     def set_character(self, character):
-        self.word_now += character
         if self.i > len(self.character) - 1:
             self.k -= 1
+            Сharacter(character, labyrinth)
         else:
+            self.word_now += character
             self.character[self.i] = character
             self.i += 1
         # load_music(word)
@@ -268,24 +272,28 @@ class Hero(pygame.sprite.Sprite):
         self.x[0], self.y[0] = position
         self.rect = pygame.Rect(self.x[0] * TILE_SIZE, self.y[0] * TILE_SIZE, TILE_SIZE, TILE_SIZE)
         if self.x[0] == 0 and self.y[0] == 1:
-            if word == self.word_now:
-                print(self.k)
+            # print(self.word_now)
+            if self.word == self.word_now:
+                # print(self.k)
                 # load_music(word)
-                file = "data/" + word + ".ogg"
+                file = "data/" + self.word + ".ogg"
                 s = pygame.mixer.Sound(file)
                 s.play()
-                end_level(word, self.k)
+                end_level(self.word, self.k, self.type_game)
 
             else:
-                end_level_wrong(word, self.word_now)
-                print("Неверно")
+                end_level_wrong(self.word, self.word_now)
+                # print("Неверно")
 
     def render(self, screen):
         for i in range(self.len):
             center1 = self.x[i] * TILE_SIZE + TILE_SIZE // 2, self.y[i] * TILE_SIZE + TILE_SIZE // 2
-            pygame.draw.circle(screen, (255, 255, 255), center1, TILE_SIZE // 2)
+            if i == 0:
+                pygame.draw.circle(screen, "#006400", center1, TILE_SIZE // 2)
+            else:
+                pygame.draw.circle(screen, "#32CD32", center1, TILE_SIZE // 2)
             font = pygame.font.Font(None, 20)
-            text = font.render(self.character[i], True, [255, 0, 0])
+            text = font.render(self.character[i], True, [255, 255, 255])
             textpos = center1[0] - 5, center1[1] - 5
             screen.blit(text, textpos)
 
@@ -380,19 +388,19 @@ def terminate():
     sys.exit()
 
 
-def start_screen():
+def choice():
     intro_text = [
-        "Выбери уровень:", "Для этого нажми a или e", "для изучения выбранной буквы"]
-    fon = pygame.transform.scale(load_image('fon.jpg'), (WINDOW_WIDTH, WINDOW_HIGHT))
+        "Нажми a или e"]
+    fon = pygame.transform.scale(load_image('choice.png'), (WINDOW_WIDTH, WINDOW_HIGHT))
     screen.blit(fon, (0, 0))
-    font = pygame.font.Font(None, 30)
-    text_coord = 200
+    font = pygame.font.SysFont('arial', 40)
+    text_coord = 250
     for line in intro_text:
         string_rendered = font.render(line, 1, pygame.Color(0, 0, 0))
         intro_rect = string_rendered.get_rect()
         text_coord += 10
         intro_rect.top = text_coord
-        intro_rect.x = 10
+        intro_rect.x = 150
         text_coord += intro_rect.height
         screen.blit(string_rendered, intro_rect)
     while True:
@@ -410,23 +418,23 @@ def start_screen():
 def type(level):
     if level == "a":
         intro_text = [
-            "Выбери тип задания:", "Для этого нажми цифру, соответствующую ей:", "1. Учить слова с буквой a",
-            "2. Учить заглавные буквы", "3. Учить строчные буквы"]
-        fon = pygame.transform.scale(load_image('a.jpg'), (WINDOW_WIDTH, WINDOW_HIGHT))
+            "Нажми цифру:", "1 - учить слова с буквой a",
+            "2 - учить заглавные буквы", "3 - учить строчные буквы"]
+        fon = pygame.transform.scale(load_image('a.png'), (WINDOW_WIDTH, WINDOW_HIGHT))
     else:
         intro_text = [
-            "Выбери тип задания:", "Для этого нажми цифру, соответствующую ей:", "1. Учить слова с буквой e",
-            "2. Учить заглавные буквы", "3. Учить строчные буквы"]
-        fon = pygame.transform.scale(load_image('e.jpg'), (WINDOW_WIDTH, WINDOW_HIGHT))
+            "Нажми цифру:", "1 - учить слова с буквой e",
+            "2 - учить заглавные буквы", "3 - учить строчные буквы"]
+        fon = pygame.transform.scale(load_image('e.png'), (WINDOW_WIDTH, WINDOW_HIGHT))
     screen.blit(fon, (0, 0))
-    font = pygame.font.Font(None, 30)
-    text_coord = 200
+    font = pygame.font.SysFont('arial', 40)
+    text_coord = 150
     for line in intro_text:
         string_rendered = font.render(line, 1, pygame.Color(0, 0, 0))
         intro_rect = string_rendered.get_rect()
         text_coord += 10
         intro_rect.top = text_coord
-        intro_rect.x = 10
+        intro_rect.x = 70
         text_coord += intro_rect.height
         screen.blit(string_rendered, intro_rect)
     while True:
@@ -444,15 +452,15 @@ def type(level):
 
 
 def end():
-    fon = pygame.transform.scale(load_image('end.jpg'), (WINDOW_WIDTH, WINDOW_HIGHT))
+    fon = pygame.transform.scale(load_image('english.png'), (WINDOW_WIDTH, WINDOW_HIGHT))
     screen.blit(fon, (0, 0))
-    font = pygame.font.Font(None, 30)
-    text_coord = 100
+    font = pygame.font.SysFont("arial", 30)
+    text_coord = 150
     line = "Приходи ещё играть"
     string_rendered = font.render(line, 1, pygame.Color(0, 0, 0))
     intro_rect = string_rendered.get_rect()
     intro_rect.top = text_coord
-    intro_rect.x = 120
+    intro_rect.x = 150
     text_coord += intro_rect.height
     screen.blit(string_rendered, intro_rect)
     while True:
@@ -467,63 +475,50 @@ def end():
         pygame.display.flip()
 
 
-if __name__ == "__main__":
-    pygame.init()
-    level = start_screen()
+def main():
+    level = choice()
     types = type(level)
-    task = ""
-    if types == 1:
-        task = "Собери по английски слова"
-    elif types == 2:
-        task = "Собери слова большими буквами"
-    elif types == 3:
-        task = "Собери слова маленьким буквами"
-    word = ""
-    k = 10
     screen = pygame.display.set_mode(WINDOW_SIZE)
-    sprite_hero = pygame.sprite.Group()
-    dict_a = {"cat": "кот", "hat": "шляпа", "ant": "муравей", "map": "карта"}
-    dict_e = {"ten": "10", "net": "сеть", "pet": "питомец", "pen": "ручка"}
-    list_a = ["cat", "hat", "ant", "map"]
-    list_e = ["ten", "net", "pet", "pen"]
     words = []
-    type_game = ''
     if level == "a":
+        # print(words)
         words = sample(list_a, 2)
+        # print(words)
         if types == 1:
-            task = "Собери по английски слова " + dict_a[words[0]]
+            task = "Собери по-английски слово " + dict_a[words[0]]
             type_game = "english"
         elif types == 2:
-            task = "Собери слова большими буквами " + words[0]
+            task = "Собери большими буквами слово " + words[0]
             type_game = "upper"
             for i in range(len(words)):
                 words[i] = words[i].upper()
         else:
-            task = "Собери слова маленьким буквами " + words[0].upper()
+            task = "Собери маленьким буквами слово " + words[0].upper()
             type_game = "lower"
         labyrinth = Labyrinth("simple_map_a.txt", [0, 2], 2, 3, task)
         word = words[0]
     if level == "e":
+        # print(words)
         words = sample(list_e, 2)
+        # print(words)
         if types == 1:
-            task = "Собери по английски слова " + dict_e[words[0]]
+            task = "Собери по-английски слово " + dict_e[words[0]]
             type_game = "english"
         elif types == 2:
-            task = "Собери слова большими буквами " + words[0]
+            task = "Собери большими буквами слово " + words[0]
             type_game = "upper"
             for i in range(len(words)):
                 words[i] = words[i].upper()
         else:
             type_game = "lower"
-            task = "Собери слова маленьким буквами " + words[0].upper()
-        labyrinth = Labyrinth("simple_map_a.txt", [0, 2], 2, 3, task)
+            task = "Собери маленьким буквами слово " + words[0].upper()
+        labyrinth = Labyrinth("simple_map_e.txt", [0, 2], 2, 3, task)
         word = words[0]
     x = 3
     y = 1
     list_x.append(x)
     list_y.append(y)
-    hero = Hero((x, y), 3)
-    letter = pygame.sprite.Group()
+    hero = Hero((x, y), 3, word, type_game)
     for j in words:
         for i in j:
             character = i
@@ -542,3 +537,41 @@ if __name__ == "__main__":
         clock.tick(FPS)
     end()
     pygame.quit()
+
+
+def start_screen():
+    intro_text = ["Давай играть!", "Нажми любую клавишу"]
+    fon = pygame.transform.scale(load_image('abc.png'), (WINDOW_WIDTH, WINDOW_HIGHT))
+    screen.blit(fon, (0, 0))
+    font = pygame.font.SysFont('arial', 40)
+    text_coord = 150
+    for line in intro_text:
+        string_rendered = font.render(line, 1, pygame.Color(0, 0, 0))
+        intro_rect = string_rendered.get_rect()
+        text_coord += 10
+        intro_rect.top = text_coord
+        intro_rect.x = 120
+        text_coord += intro_rect.height
+        screen.blit(string_rendered, intro_rect)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.KEYDOWN or \
+                    event.type == pygame.MOUSEBUTTONDOWN:
+                return  # начинаем игру
+        pygame.display.flip()
+
+
+if __name__ == "__main__":
+    pygame.init()
+    task = ""
+    sprite_hero = pygame.sprite.Group()
+    letter = pygame.sprite.Group()
+    dict_a = {"cat": "кот", "hat": "шляпа", "ant": "муравей", "map": "карта"}
+    dict_e = {"ten": "10", "net": "сеть", "pet": "питомец", "pen": "ручка"}
+    list_a = ["cat", "hat", "ant", "map"]
+    list_e = ["ten", "net", "pet", "pen"]
+    labyrinth = Labyrinth("simple_map_a.txt", [0, 2], 2, 3, task)
+    start_screen()
+    main()
